@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        #blink {
+            animation: blinker 1s linear infinite;
+            color: red;
+            font-family: sans-serif;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-success">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img
+                    src="https://cdn.iconscout.com/icon/free/png-512/shopping-cart-442-1151214.png" alt=""
+                    style="height: 70px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
+                aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
+                    <li class="nav-item ">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-warning" href="#">Prodcuts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                </ul>
+                <form class="d-flex  me-5">
+                    <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                    <i class="fa-solid fa-magnifying-glass fa-xl px-4"></i>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <section id="cards-section">
+        <div class="container">
+            <div id="results" class="row"></div>
+        </div>
+    </section>
+</body>
+<script>
+    fetch("https://dummyjson.com/carts")
+        .then(data => data.json())
+        .then(data => {displayCarts(data)})
+    function displayCarts(data) {
+        for (i of data.carts) {
+            for (j of i.products) {
+                htmlData = `<div class="col-3 shadow-lg p-3 mb-5 bg-white rounded m-5" style="width: 21rem";>
+        <div class="card border-0" style="width: 18rem;">
+                <img src="${j.thumbnail}" class="card-img-top" alt="..." style="height: 260px">
+                <div class="card-body text-center">
+                    <h5 class="card-title p-4 text-success">${j.title}</h6>
+                    <h6 class="card-title">ID : <span class="text-primary">${j.id}</span></h6>
+                    <h6 class="card-title">Price : <span class="text-primary">$${j.price}</span></h6>
+                    <h6 class="card-title">Quantity : <span class="text-primary">${j.quantity}</span></h6>
+                    <h6 class="card-title">Total : <span class="text-primary">$${j.total}</span></h6>
+                    <h6 id="blink" class="bg-warning p-2">Discount Percentage :${j.discountPercentage}%</h6>
+                    <h6 class="card-title">Discounted Price : <span class="text-primary">${j.discountedPrice}</span></h6>
+                    <button type="button" class="btn btn-outline-danger btn-rounded" data-mdb-ripple-init  data-mdb-ripple-color="dark">Buy Now</button>
+                </div>
+                </div>`
+
+                results.innerHTML += htmlData;
+            }
+
+        }
+
+    }
+
+</script>
+
+</html>
